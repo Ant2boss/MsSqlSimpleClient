@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace MsSqlSimpleClient.Attributes.Conversion
+namespace MsSqlSimpleClient.Attributes.SqlTable
 {
     /// <summary>
     /// If a given attribute should be considered as collection. This collection will be generated from the additional table columns (if the items are present).

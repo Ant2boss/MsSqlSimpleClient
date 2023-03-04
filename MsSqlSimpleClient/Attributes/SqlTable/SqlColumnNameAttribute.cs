@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace MsSqlSimpleClient.Attributes.Conversion
+namespace MsSqlSimpleClient.Attributes.SqlTable
 {
     /// <summary>
     /// Used to ovveride the default name for the column lookup when reading a table.
@@ -14,7 +14,7 @@ namespace MsSqlSimpleClient.Attributes.Conversion
     {
         public SqlColumnNameAttribute(string name)
         {
-            this.Name = name;
+            Name = name;
         }
 
         public string Name { get; }

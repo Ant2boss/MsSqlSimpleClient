@@ -4,11 +4,11 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace MsSqlSimpleClient.Attributes.Conversion
+namespace MsSqlSimpleClient.Attributes.SqlTable
 {
     /// <summary>
-    /// If a given property should be ignored on table parse.
+    /// Identity is used to identify unique elements when trying to process a table into a collection or item.
     /// </summary>
     [AttributeUsage(AttributeTargets.Property, Inherited = true, AllowMultiple = false)]
-    public sealed class SqlIgnoreAttribute : Attribute { }
+    public sealed class SqlIdentityAttribute : Attribute { }
 }
