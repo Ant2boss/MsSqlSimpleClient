@@ -1,4 +1,4 @@
-﻿using MsSqlSimpleClient.Attributes.Handlers;
+﻿using MsSqlSimpleClient.SqlClient.Handlers;
 using System;
 using System.Collections.Generic;
 using System.Data;
@@ -18,7 +18,7 @@ namespace MsSqlSimpleClient.SqlClient.Procedures
             this._connectionString = connectionString;
         }
 
-        public Task<int> ExecuteNonQueryProcedureAsync<PropType>(string procedure, PropType? procedureProps, Action<PropType>? propsHandler)
+        public Task<int> ExecuteNonQueryAsync<PropType>(string procedure, PropType? procedureProps, Action<PropType>? propsHandler)
         {
             return Task.Run(() =>
             {
@@ -38,7 +38,7 @@ namespace MsSqlSimpleClient.SqlClient.Procedures
             });
         }
 
-        public Task<DataSet> ExecuteQueryProcedureAsync<PropType>(string procedure, PropType? procedureProps, Action<PropType>? propsHandler)
+        public Task<DataSet> ExecuteQueryAsync<PropType>(string procedure, PropType? procedureProps, Action<PropType>? propsHandler)
         {
             return Task.Run(() =>
             {

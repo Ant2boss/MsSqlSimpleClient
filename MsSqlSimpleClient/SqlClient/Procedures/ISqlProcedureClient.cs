@@ -23,7 +23,7 @@ namespace MsSqlSimpleClient.SqlClient.Procedures
         /// <returns>Number od records affeceted by the client.</returns>
         /// <exception cref="ArgumentException" />
         /// <exception cref="SqlException" />
-        public Task<int> ExecuteNonQueryProcedureAsync<PropType>(string procedure, PropType? procedureProps, Action<PropType>? propsHandler);
+        public Task<int> ExecuteNonQueryAsync<PropType>(string procedure, PropType? procedureProps, Action<PropType>? propsHandler);
 
         /// <summary>
         /// Executes the procedure with given name. This method will read any otuput parameters into the given props object.
@@ -36,6 +36,6 @@ namespace MsSqlSimpleClient.SqlClient.Procedures
         /// <returns>Dataset of tables returned by the SQL procedure.</returns>
         /// <exception cref="ArgumentException" />
         /// <exception cref="SqlException" />
-        public Task<DataSet> ExecuteQueryProcedureAsync<PropType>(string procedure, PropType? procedureProps, Action<PropType>? propsHandler);
+        public Task<DataSet> ExecuteQueryAsync<PropType>(string procedure, PropType? procedureProps, Action<PropType>? propsHandler);
     }
 }

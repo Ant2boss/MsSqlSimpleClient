@@ -5,8 +5,9 @@ using System.Linq;
 using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
+using MsSqlSimpleClient.Attributes.Procedures;
 
-namespace MsSqlSimpleClient.Attributes.Handlers
+namespace MsSqlSimpleClient.SqlClient.Handlers
 {
     public static class SqlPropsHandler
     {

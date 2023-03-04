@@ -4,14 +4,14 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace MsSqlSimpleClient.Attributes
+namespace MsSqlSimpleClient.Attributes.Procedures
 {
-    [System.AttributeUsage(AttributeTargets.Property, Inherited = true, AllowMultiple = false)]
+    [AttributeUsage(AttributeTargets.Property, Inherited = true, AllowMultiple = false)]
     public sealed class SqlParameterNameAttribute : Attribute
     {
         public SqlParameterNameAttribute(string parameterName)
         {
-            this.ParameterName = parameterName;
+            ParameterName = parameterName;
         }
 
         public string ParameterName { get; }

@@ -1,43 +1,49 @@
 ﻿using MsSqlSimpleClient.Attributes;
+using MsSqlSimpleClient.Attributes.Conversion;
+using MsSqlSimpleClient.Attributes.Procedures;
 using MsSqlSimpleClient.SqlClient.Procedures;
 using System.Data;
 using System.Data.SqlClient;
+using MsSqlSimpleClient.Converters;
 
 string cs = File.ReadAllLines("connection.secret")[0];
 
-var sqlClient = new SqlProcedureClient(cs);
-
-int id = 0;
-
-DataSet data = await sqlClient.ExecuteQueryProcedureAsync(
-    "test_procedure",
-    new ProcedureParameters
-    {
-        FirstName = "Robert",
-        LastName = "MeDiro",
-        Age = 22
-    }, (props) =>
-    {
-        id = props.Identity;
-    });
-
-Console.WriteLine("ID: " + id);
-
-Console.WriteLine("Table count: " + data.Tables.Count);
-Console.WriteLine("Table[0] rows count: " + data.Tables[0].Rows.Count);
-
-Console.WriteLine("Table[0].Rows[0][fn]: " + data.Tables[0].Rows[0]["fn"]);
-Console.WriteLine("Table[0].Rows[0][ln]: " + data.Tables[0].Rows[0]["ln"]);
-Console.WriteLine("Table[0].Rows[0][a]: " + data.Tables[0].Rows[0]["a"]);
-
-class ProcedureParameters
+async Task BasicSqlProcedureCall()
 {
-    public string FirstName { get; set; } = "";
-    public string LastName { get; set; } = "";
-    public int Age { get; set; } = 0;
+    var sqlClient = new SqlProcedureClient(cs);
 
-    [SqlOutput]
-    [SqlParameterName("Id")]
-    public int Identity { get; set; }
+    var results = (await sqlClient.ExecuteQueryProcedureAsync(
+        "test_procedure",
+        new
+        {
+            FirstName = "Robert",
+            LastName = "MeDiro",
+            Age = 22,
+            Id = 0
+        })).ConvertTo<Results>(ignoreGrouping: true);
+
+    foreach (var result in results)
+    {
+        Console.WriteLine(result);
+    }
+}
+
+await BasicSqlProcedureCall();
+
+class Results
+{
+    [SqlRequired]
+    [SqlColumnName("fn")]
+    public string FirstName { get; set; } = "";
+
+    [SqlRequired]
+    [SqlColumnName("ln")]
+    public string LastName { get; set; } = "";
+
+    [SqlRequired]
+    [SqlColumnName("a")]
+    public int Age { get; set; }
+
+    public override string ToString() => $"{FirstName} {LastName} [{this.Age}]";
 }
 
