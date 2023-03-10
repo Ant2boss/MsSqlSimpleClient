@@ -1,10 +1,10 @@
 ﻿using MsSqlSimpleClient.Attributes;
-using MsSqlSimpleClient.Attributes.Conversion;
 using MsSqlSimpleClient.Attributes.Procedures;
 using MsSqlSimpleClient.SqlClient.Procedures;
 using System.Data;
 using System.Data.SqlClient;
 using MsSqlSimpleClient.Converters;
+using MsSqlSimpleClient.Attributes.SqlTable;
 
 string cs = File.ReadAllLines("connection.secret")[0];
 
