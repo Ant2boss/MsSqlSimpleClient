@@ -10,9 +10,14 @@ namespace MsSqlSimpleClient.SqlClient.Procedures
 {
     public static class SqlProcedureClientExtensions
     {
-        public static Task<DataSet> ExecuteQueryProcedureAsync(this ISqlProcedureClient client, string procedure)
+        public static Task<DataSet> ExecuteQueryAsync(this ISqlProcedureClient client, string procedure)
             => client.ExecuteQueryAsync<object?>(procedure, null, null);
-        public static Task<DataSet> ExecuteQueryProcedureAsync<PropType>(this ISqlProcedureClient client, string procedure, PropType procedureProps)
+        public static Task<DataSet> ExecuteQueryAsync<PropType>(this ISqlProcedureClient client, string procedure, PropType procedureProps)
             => client.ExecuteQueryAsync(procedure, procedureProps, null);
+
+        public static Task<int> ExecuteNonQueryAsync(this ISqlProcedureClient client, string procedure)
+            => client.ExecuteNonQueryAsync<object?>(procedure, null, null);
+        public static Task<int> ExecuteNonQueryAsync<PropType>(this ISqlProcedureClient client, string procedure, PropType procedureProps)
+            => client.ExecuteNonQueryAsync(procedure, procedureProps, null);
     }
 }
