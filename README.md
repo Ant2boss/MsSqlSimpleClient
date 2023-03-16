@@ -4,33 +4,11 @@
 
 Although the process is not difficult, it can get very tedious very quickly.
 
-<!-- vscode-markdown-toc -->
-* 1. [SQL procedure client](#SQLprocedureclient)
-	* 1.1. [Calling a procedure with no parameters and no results](#Callingaprocedurewithnoparametersandnoresults)
-	* 1.2. [Calling a procedure with parameters and no results](#Callingaprocedurewithparametersandnoresults)
-	* 1.3. [SQL procedure with results](#SQLprocedurewithresults)
-* 2. [SQL direct client](#SQLdirectclient)
-* 3. [Calling procedures](#Callingprocedures)
-* 4. [Calling procedures with output parameters](#Callingprocedureswithoutputparameters)
-* 5. [Handling parameter names](#Handlingparameternames)
-* 6. [Handling output parameters from a procedure](#Handlingoutputparametersfromaprocedure)
-* 7. [Converting a data set](#Convertingadataset)
-* 8. [Converting a grouped data set](#Convertingagroupeddataset)
-* 9. [Converting a grouped data set (joins)](#Convertingagroupeddatasetjoins)
-* 10. [Define sql column name](#Definesqlcolumnname)
-* 11. [Ignore property](#Ignoreproperty)
-
-<!-- vscode-markdown-toc-config
-	numbering=true
-	autoSave=true
-	/vscode-markdown-toc-config -->
-<!-- /vscode-markdown-toc -->
-
 # Getting started
 
-##  1. <a name='SQLprocedureclient'></a>SQL procedure client
+##  1. SQL procedure client
 
-###  1.1. <a name='Callingaprocedurewithnoparametersandnoresults'></a>Calling a procedure with no parameters and no results
+###  1.1. Calling a procedure with no parameters and no results
 
 ```cs
 // Creates a new SQL client
@@ -43,7 +21,7 @@ client.ExecuteNonQueryAsync("procedureName");
 
 This will execute the procedure with the given name on the server speicified through the connection string.
 
-###  1.2. <a name='Callingaprocedurewithparametersandnoresults'></a>Calling a procedure with parameters and no results
+###  1.2. Calling a procedure with parameters and no results
 
 In order to call a procedure with paramters you first have to create an object, which contains the properties required by the procedure.
 
@@ -103,7 +81,7 @@ client.ExecuteNonQueryAsync("CreatePerson", new {
 
 In addition you can also pass an annonymuss object isntead of a concrete one.
 
-###  1.3. <a name='SQLprocedurewithresults'></a>SQL procedure with results
+###  1.3. SQL procedure with results
 
 When it comes to reading procedures with results all of the modifications specified in the previous parts are also aplicable (What I am trying to imply is that you can pass parameters the same way as mentioned in the section above).
 
@@ -142,7 +120,7 @@ If you have any extra tables and columns that are not related to the object, the
 
 `ignoreGrouping` parameter determines if the objects should be grouped together based on the identity. This should (hopefully) be covered in later parts of the document.
 
-##  2. <a name='SQLdirectclient'></a>SQL direct client
+##  2. SQL direct client
 
 Sometimes you don't need the full feature set that the procedures, and you would rather just use SQL commands directly. Although it is not a good practice, it's here.
 
@@ -168,7 +146,7 @@ Same as in the last chapter the data set can be converted using the `ConvertTo<>
 
 # SQL procedure client
 
-##  3. <a name='Callingprocedures'></a>Calling procedures
+##  3. Calling procedures
 
 ``` cs
 
@@ -182,7 +160,7 @@ sqlProcedureClient.ExecuteNonQuery("CreatePerson", new { FirstName = "", LastNam
 
 When calling a procedure you have to provide a procedure name. If your procedure needs parameters, they can provided through the second parameter which is an object. The second parameter can either be an actual object, or you can use an annonymuss object.
 
-##  4. <a name='Callingprocedureswithoutputparameters'></a>Calling procedures with output parameters
+##  4. Calling procedures with output parameters
 
 ``` cs
 
@@ -211,7 +189,7 @@ int createdId = personParams.PersonId;
 
 As I tried to explain in the above paragraph; after the `ExecuteNonQuery` calls the procedure it will read any specified `SqlOutput` parameters and try to load the values into the provided props object.
 
-##  5. <a name='Handlingparameternames'></a>Handling parameter names
+##  5. Handling parameter names
 
 ``` cs
 
@@ -230,7 +208,7 @@ public class CreatePersonParams
 
 Sometimes your variable names will not match with the names of the paramters the procedure has. You can use the `SqlParameterName` attribute to define a different name when mapping properties to a procedure.
 
-##  6. <a name='Handlingoutputparametersfromaprocedure'></a>Handling output parameters from a procedure
+##  6. Handling output parameters from a procedure
 
 ``` cs
 
@@ -249,7 +227,7 @@ When I was defining the methods it sounded usefull, but now... I don't know... I
 
 # Data set converter
 
-##  7. <a name='Convertingadataset'></a>Converting a data set
+##  7. Converting a data set
 ``` cs
 
 public class Person
@@ -276,7 +254,7 @@ Column names from the data set are mapped to the property names. Columns and pro
 
 `ignoreGrouping` specifies that there should be no fancy groupings done when collecting the objects.
 
-##  8. <a name='Convertingagroupeddataset'></a>Converting a grouped data set
+##  8. Converting a grouped data set
 
 ``` cs
 
@@ -313,7 +291,7 @@ If `ignoreGrouping` is set to false, you would get back 3 items with all of the 
 
 However, if `ignoreGrouping` is set to true (which is the default value), you would only get back 2 items, while the last item in the table (for this example) would be ignored, because an item with the id = 2 is already loaded.
 
-##  9. <a name='Convertingagroupeddatasetjoins'></a>Converting a grouped data set (joins)
+##  9. Converting a grouped data set (joins)
 
 I think grouping is usefull when it comes to SQL joins. Consider the following class hierarchy.
 
@@ -363,7 +341,7 @@ IEnumerable<Family> families = data.ConvertTo<Family>();
 
 ```
 
-##  10. <a name='Definesqlcolumnname'></a>Define sql column name
+##  10. Define sql column name
 
 ``` cs
 public class Person
@@ -381,7 +359,7 @@ public class Person
 
 Sometimes the property name will not match the name of the column the data should be read from. You can use the `SqlColumnName` attribute in order to change from which column the data should be loaded from.
 
-##  11. <a name='Ignoreproperty'></a>Ignore property
+##  11. Ignore property
 
 ``` cs
 public class Person

@@ -4,7 +4,23 @@
     <TargetFramework>net6.0</TargetFramework>
     <ImplicitUsings>enable</ImplicitUsings>
     <Nullable>enable</Nullable>
+    <GeneratePackageOnBuild>True</GeneratePackageOnBuild>
+    <Title>MSSQL simple client</Title>
+    <Description>A (hopefully) simple client for connecting to a database, calling procedures, and transforming data into concrete objects.</Description>
+    <PackageProjectUrl>https://github.com/Ant2boss/MsSqlSimpleClient</PackageProjectUrl>
+    <RepositoryUrl>https://github.com/Ant2boss/MsSqlSimpleClient</RepositoryUrl>
+    <PackageTags>mssql;client;data</PackageTags>
+    <Authors>Ant2boss</Authors>
+    <PackageLicenseExpression>MIT</PackageLicenseExpression>
+    <PackageReadmeFile>README.md</PackageReadmeFile>
   </PropertyGroup>
+
+  <ItemGroup>
+    <None Include="..\README.md">
+      <Pack>True</Pack>
+      <PackagePath>\</PackagePath>
+    </None>
+  </ItemGroup>
 
   <ItemGroup>
     <PackageReference Include="System.Data.SqlClient" Version="4.8.5" />

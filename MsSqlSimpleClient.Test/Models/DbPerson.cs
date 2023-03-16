@@ -1,4 +1,4 @@
-﻿using MsSqlSimpleClient.Attributes.Conversion;
+﻿using MsSqlSimpleClient.Attributes.SqlTable;
 using System;
 using System.Collections.Generic;
 using System.Linq;
