@@ -12,6 +12,7 @@ string cs = File.ReadAllLines("connection.secret")[0];
 
 ISqlProcedureClient client = new SqlProcedureClient(cs);
 
+// Manually defining the return parameter
 SqlParameter param = new SqlParameter();
 param.ParameterName = "@ProcParameter";
 param.DbType = DbType.Int32;
