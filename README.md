@@ -377,3 +377,39 @@ public class Person
 ```
 
 If you want to ignore a value when reading from the data set, you can use the `SqlIgnore` attribute. When data is being converted, these properties will not be considered when reading data tables.
+
+##  12. SQL procedure client 'execute with'
+
+Sometimes it can get very annoying to create new props objects every time you want to invoke a procedure. In order to simplify the process, the procedure client contains the methods `ExecuteNonQueryAsyncWith` and `ExecuteQueryAsyncWith`.
+
+```cs
+
+ISqlProcedureClient client = new SqlProcedureClient(cs);
+
+// This will invoke the procedure with parameters 1,2,3,4
+client.ExecuteNonQueryAsyncWith("procedure", 1, 2, 3, 4);
+
+```
+
+You can pass in as many parameters as you need, they will be read and passed to the procedure call in the same order as they are passed to the method call.
+
+**If you need an otput parameter, I would recoment using the `ExecuteNonQueryAsync` method and passing an actual parameters object which is configured using the `SqlOutput` attribute.** However, you can pass the built-in `SqlParameters` object (built-in, as in, this object is part of the SQL connector library) to the method which will be loaded into the procedure call instead.
+
+```cs
+
+ISqlProcedureClient client = new SqlProcedureClient(cs);
+
+// Manually defining the return parameter
+SqlParameter param = new SqlParameter();
+param.ParameterName = "@ProcParameter";
+param.DbType = DbType.Int32;
+param.Direction = ParameterDirection.Output;
+
+// This will invoke the procedure with parameters 1,2,3,4
+client.ExecuteNonQueryAsyncWith("procedure", param);
+
+int resultValue = (int)param.Value;
+
+```
+
+It does seem a bit annoying to have to define a parameter, but hey, I put it in here if you want it.

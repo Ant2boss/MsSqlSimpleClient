@@ -30,9 +30,24 @@ namespace MsSqlSimpleClient.SqlClient.Procedures
                 });
 
                 if (procedureProps is not null)
-                { 
+                {
                     propsHandler?.Invoke(procedureProps);
                 }
+
+                return result;
+            });
+        }
+
+        public Task<int> ExecuteNonQueryAsyncWith(string procedure, params object[] procedureParameters)
+        {
+            return Task.Run(() =>
+            {
+                int result = 0;
+
+                this._PrepareForProcedureCallWith(procedure, procedureParameters, (connection, command) =>
+                {
+                    result = command.ExecuteNonQuery();
+                });
 
                 return result;
             });
@@ -51,9 +66,25 @@ namespace MsSqlSimpleClient.SqlClient.Procedures
                 });
 
                 if (procedureProps is not null)
-                { 
+                {
                     propsHandler?.Invoke(procedureProps);
                 }
+
+                return ds;
+            });
+        }
+
+        public Task<DataSet> ExecuteQueryAsyncWith(string procedure, params object[] procedureParameters)
+        {
+            return Task.Run(() =>
+            {
+                DataSet ds = new DataSet();
+
+                this._PrepareForProcedureCall(procedure, procedureParameters, (connection, command) =>
+                {
+                    using SqlDataAdapter adapter = new SqlDataAdapter(command);
+                    adapter.Fill(ds);
+                });
 
                 return ds;
             });
@@ -82,6 +113,40 @@ namespace MsSqlSimpleClient.SqlClient.Procedures
                     {
                         SqlPropsHandler.ReadOutputParameters(command.Parameters, props);
                     }
+                }
+            }
+        }
+
+        private void _PrepareForProcedureCallWith(string procedure, object[] procedureParameters, Action<SqlConnection, SqlCommand> handler)
+        {
+            using (SqlConnection connection = new SqlConnection(this._connectionString))
+            {
+                connection.Open();
+
+                using (SqlCommand command = connection.CreateCommand())
+                {
+                    command.CommandType = CommandType.StoredProcedure;
+                    command.CommandText = procedure;
+
+                    SqlCommandBuilder.DeriveParameters(command);
+
+                    if (command.Parameters.Count != procedureParameters.Length)
+                    {
+                        throw new ArgumentException($"Procedure ({procedure}) expected ({command.Parameters.Count}) parameters, but found ({procedureParameters.Length})");
+                    }
+
+                    for (int i = 0; i < procedureParameters.Length; ++i)
+                    {
+                        if (procedureParameters[i] is SqlParameter param)
+                        {
+                            command.Parameters[i] = param;
+                            continue;
+                        }
+
+                        command.Parameters[i].Value = procedureParameters[i];
+                    }
+
+                    handler.Invoke(connection, command);
                 }
             }
         }

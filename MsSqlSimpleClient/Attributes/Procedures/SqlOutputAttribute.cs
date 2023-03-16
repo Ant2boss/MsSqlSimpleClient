@@ -6,6 +6,9 @@ using System.Threading.Tasks;
 
 namespace MsSqlSimpleClient.Attributes.Procedures
 {
+    /// <summary>
+    /// Mark the property as an output parameter.
+    /// </summary>
     [AttributeUsage(AttributeTargets.Property, Inherited = true, AllowMultiple = false)]
     public sealed class SqlOutputAttribute : Attribute { }
 }

@@ -10,7 +10,14 @@ using MsSqlSimpleClient.SqlClient.Direct;
 string cs = File.ReadAllLines("connection.secret")[0];
 
 
-ISqlDirectClient client = new SqlDirectClient(cs);
+ISqlProcedureClient client = new SqlProcedureClient(cs);
 
-IEnumerable<string> people = (await client.ExecuteQueryAsync("select * from People")).ConvertTo<string>();
+SqlParameter param = new SqlParameter();
+param.ParameterName = "@ProcParameter";
+param.DbType = DbType.Int32;
+param.Direction = ParameterDirection.Output;
 
+// This will invoke the procedure with parameters 1,2,3,4
+client.ExecuteNonQueryAsyncWith("procedure", param);
+
+int resultValue = (int)param.Value;

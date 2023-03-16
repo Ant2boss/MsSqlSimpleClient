@@ -6,6 +6,9 @@ using System.Threading.Tasks;
 
 namespace MsSqlSimpleClient.Attributes.Procedures
 {
+    /// <summary>
+    /// Specify the name to use when converting the object to property.
+    /// </summary>
     [AttributeUsage(AttributeTargets.Property, Inherited = true, AllowMultiple = false)]
     public sealed class SqlParameterNameAttribute : Attribute
     {

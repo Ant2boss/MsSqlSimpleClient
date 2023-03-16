@@ -37,5 +37,21 @@ namespace MsSqlSimpleClient.SqlClient.Procedures
         /// <exception cref="ArgumentException" />
         /// <exception cref="SqlException" />
         public Task<DataSet> ExecuteQueryAsync<PropType>(string procedure, PropType? procedureProps, Action<PropType>? propsHandler);
+
+        /// <summary>
+        /// Executes the procedure with the given name. The paramters are loaded in the same order they are provided in.
+        /// </summary>
+        /// <param name="procedure">Name of the procedure to invoke.</param>
+        /// <param name="procedureParameters">Parameters to pass to the procedure.</param>
+        /// <returns>Number of affected rows.</returns>
+        public Task<int> ExecuteNonQueryAsyncWith(string procedure, params object[] procedureParameters);
+
+        /// <summary>
+        /// Executes the procedure with the given name. The paramters are loaded in the same order they are provided in.
+        /// </summary>
+        /// <param name="procedure">Name of the procedure to invoke.</param>
+        /// <param name="procedureParameters">Parameters to pass to the procedure.</param>
+        /// <returns>DataSet containg results of the proceudure.</returns>
+        public Task<DataSet> ExecuteQueryAsyncWith(string procedure, params object[] procedureParameters);
     }
 }
