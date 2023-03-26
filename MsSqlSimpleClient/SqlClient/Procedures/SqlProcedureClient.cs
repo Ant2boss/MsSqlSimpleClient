@@ -80,7 +80,7 @@ namespace MsSqlSimpleClient.SqlClient.Procedures
             {
                 DataSet ds = new DataSet();
 
-                this._PrepareForProcedureCall(procedure, procedureParameters, (connection, command) =>
+                this._PrepareForProcedureCallWith(procedure, procedureParameters, (connection, command) =>
                 {
                     using SqlDataAdapter adapter = new SqlDataAdapter(command);
                     adapter.Fill(ds);
