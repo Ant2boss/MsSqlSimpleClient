@@ -130,7 +130,7 @@ namespace MsSqlSimpleClient.SqlClient.Procedures
 
                     SqlCommandBuilder.DeriveParameters(command);
 
-                    if (command.Parameters.Count != procedureParameters.Length)
+                    if (command.Parameters.Count != procedureParameters.Length + 1)
                     {
                         throw new ArgumentException($"Procedure ({procedure}) expected ({command.Parameters.Count}) parameters, but found ({procedureParameters.Length})");
                     }
@@ -139,11 +139,11 @@ namespace MsSqlSimpleClient.SqlClient.Procedures
                     {
                         if (procedureParameters[i] is SqlParameter param)
                         {
-                            command.Parameters[i] = param;
+                            command.Parameters[i + 1] = param;
                             continue;
                         }
 
-                        command.Parameters[i].Value = procedureParameters[i];
+                        command.Parameters[i + 1].Value = procedureParameters[i];
                     }
 
                     handler.Invoke(connection, command);

@@ -12,13 +12,6 @@ string cs = File.ReadAllLines("connection.secret")[0];
 
 ISqlProcedureClient client = new SqlProcedureClient(cs);
 
-// Manually defining the return parameter
-SqlParameter param = new SqlParameter();
-param.ParameterName = "@ProcParameter";
-param.DbType = DbType.Int32;
-param.Direction = ParameterDirection.Output;
+DataSet data = await client.ExecuteQueryAsyncWith("GetFamilyMember", 1);
 
-// This will invoke the procedure with parameters 1,2,3,4
-client.ExecuteNonQueryAsyncWith("procedure", param);
-
-int resultValue = (int)param.Value;
+Console.WriteLine(data);
